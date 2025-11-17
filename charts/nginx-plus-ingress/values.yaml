@@ -7,8 +7,8 @@ nginx-ingress:
       enable: true
     enableSnippets: true
     image:
-      repository: ghcr.io/<GITHUB_USER>/nginx-plus-ingress
-      tag: <TAG>
+      repository: oteizaa/nginx-ic
+      tag: latest
     nginxplus: true
     nginxStatus:
       allowCidrs: 0.0.0.0/0
