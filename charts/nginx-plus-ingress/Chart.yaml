@@ -2,9 +2,9 @@
 apiVersion: v2
 name: nginx-plus-ingress
 type: application
-version: 0.16.2
-appVersion: 3.0.2
+version: 1.5.4
+appVersion: 5.5.4
 dependencies:
   - name: nginx-ingress
-    version: 0.16.2
+    version: 1.5.4
     repository: https://helm.nginx.com/stable
