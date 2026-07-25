@@ -1,11 +1,12 @@
 ---
 nginx-ingress:
   controller:
-# 1. Desactiva el flag -v configurando la intensidad de log en vacia o usando el campo dedicado:
-    logLevel: 2  # <--- Si usas 'logLevel', el Chart usa -log-level en lugar de -v
+    # Cambiamos logLevel a string para forzar el uso de -log-level en lugar de -v
+    logLevel: "info"
     
-    # 2. En algunas versiones del Chart, debes desactivar explícitamente la bandera legacy:
-    enableVerboseLogging: false  
+    # Aseguramos el nivel de log en formato NGINX Plus
+    errorLogLevel: "info"
+    
     appprotect:
       enable: true
     appprotectdos:
@@ -14,10 +15,9 @@ nginx-ingress:
     image:
       repository: private-registry.nginx.com/nginx-ic-nap/nginx-plus-ingress
       tag: 5.5.4-agent
+      pullPolicy: Never # <--- Forzamos a k3s a usar la imagen local
     nginxplus: true
     mgmtConfigMap:
-      # Formato: <namespace>/<nombre-configmap>
-      # Puedes apuntar al mismo ConfigMap que ya usas para la configuración principal:
       enable: true
       name: "nginx-ingress/nginx-plus-ingress-nginx-ingress"
     nginxStatus:
