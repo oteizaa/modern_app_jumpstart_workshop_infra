@@ -7,8 +7,9 @@ nginx-ingress:
       enable: true
     enableSnippets: true
     image:
-      repository: oteizaa/nginx-ic
-      tag: latest
+      repository: private-registry.nginx.com/nginx-ic-nap/nginx-plus-ingress
+      tag: 5.5.4-agent
+      pullPolicy: Never
     nginxplus: true
     nginxStatus:
       allowCidrs: 0.0.0.0/0
