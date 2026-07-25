@@ -1,6 +1,11 @@
 ---
 nginx-ingress:
   controller:
+# 1. Desactiva el flag -v configurando la intensidad de log en vacia o usando el campo dedicado:
+    logLevel: 2  # <--- Si usas 'logLevel', el Chart usa -log-level en lugar de -v
+    
+    # 2. En algunas versiones del Chart, debes desactivar explícitamente la bandera legacy:
+    enableVerboseLogging: false  
     appprotect:
       enable: true
     appprotectdos:
