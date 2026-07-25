@@ -2,8 +2,7 @@
 nginx-ingress:
   controller:
     # Cambiamos logLevel a string para forzar el uso de -log-level en lugar de -v
-    logLevel: 1
-    eenableVerboseLogging: false
+    logLevel: "info"
     
     appprotect:
       enable: true
