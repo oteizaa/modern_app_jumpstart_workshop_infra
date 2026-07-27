@@ -10,12 +10,11 @@ nginx-ingress:
         imagePullPolicy: Never # <--- Fuerza a usar la imagen local de k3s
         command: ['sh', '-c', 'mkdir -p /opt/app_protect/bd_config/tables /opt/app_protect/var /opt/app_protect/bundles && chmod -R 777 /opt/app_protect']
 
-    
+    readinessProbe:
+      custom: true   
     readyStatus:
       enable: false
-      initialDelaySeconds: 30
-    readinessProbe:
-      enable: false
+
 
     appprotect:
       enable: true
