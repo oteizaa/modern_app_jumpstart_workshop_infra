@@ -13,9 +13,6 @@ nginx-ingress:
         image:
           pullPolicy: Never
       
-    appprotectdos:
-      enable: true
-      
     enableSnippets: true
     
     image:
