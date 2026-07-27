@@ -12,10 +12,6 @@ nginx-ingress:
 
     readinessProbe:
       enable: false
-    readyStatus:
-      enable: false
-
-
 
     appprotect:
       enable: true
@@ -32,6 +28,22 @@ nginx-ingress:
           repository: private-registry.nginx.com/nap/waf-config-mgr
           tag: "5.6.0"
           pullPolicy: Never
+
+    volumes:
+      - name: app-protect-bd-config
+        emptyDir: {}
+      - name: app-protect-var
+        emptyDir: {}
+      - name: app-protect-bundles
+        emptyDir: {}
+
+    volumeMounts:
+      - name: app-protect-bd-config
+        mountPath: /opt/app_protect/bd_config
+      - name: app-protect-var
+        mountPath: /opt/app_protect/var
+      - name: app-protect-bundles
+        mountPath: /opt/app_protect/bundles
           
 
     appprotectdos:
