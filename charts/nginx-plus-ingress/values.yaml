@@ -82,7 +82,7 @@ nginx-ingress:
         enable: true
         image:
           repository: private-registry.nginx.com/nap/waf-enforcer        
-          tag: "5.6.0"
+          tag: "5.13.4"
           pullPolicy: Never
         securityContext:
           runAsUser: 101
@@ -105,7 +105,7 @@ nginx-ingress:
         enable: true
         image:
           repository: private-registry.nginx.com/nap/waf-config-mgr
-          tag: "5.6.0"
+          tag: "5.13.4"
           pullPolicy: Never
         securityContext:
           runAsUser: 101
