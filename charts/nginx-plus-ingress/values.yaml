@@ -3,6 +3,12 @@ nginx-ingress:
   controller:
     logLevel: "info"
     
+    readyStatus:
+      enable: true
+      port: 8081
+      initialDelaySeconds: 15
+
+    
     appprotect:
       enable: true
       v5: true
