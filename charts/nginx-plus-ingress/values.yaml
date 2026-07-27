@@ -76,7 +76,7 @@ nginx-ingress:
         readOnlyRootFilesystem: false
       
       defaultPolicy:
-        enable: true
+        enable: false
         
       enforcer:
         enable: true
