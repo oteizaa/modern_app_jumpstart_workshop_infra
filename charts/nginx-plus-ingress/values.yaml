@@ -7,7 +7,6 @@ nginx-ingress:
       enable: true
       port: 8081
       initialDelaySeconds: 30
-
     
     appprotect:
       enable: true
