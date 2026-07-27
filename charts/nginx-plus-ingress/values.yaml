@@ -98,6 +98,11 @@ nginx-ingress:
           repository: private-registry.nginx.com/nap/waf-config-mgr
           tag: "5.6.0"
           pullPolicy: Never
+        env:
+          - name: ENFORCER_HOST
+            value: "127.0.0.1"
+          - name: ENFORCER_PORT
+            value: "50000"  
         volumeMounts:
           - name: app-protect-bd-config
             mountPath: /opt/app_protect/bd_config
