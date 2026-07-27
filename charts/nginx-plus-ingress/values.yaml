@@ -77,9 +77,6 @@ nginx-ingress:
 
     nginxplus: true
 
-    extraArgs:
-      - -app-protect-enforcer-address=127.0.0.1:50000
-
     mgmtConfigMap:
       enable: true
       name: "nginx-ingress/nginx-plus-ingress-nginx-ingress"
