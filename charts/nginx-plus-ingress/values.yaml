@@ -179,10 +179,10 @@ nginx-ingress:
           protocol: TCP
           name: nginx-status
 
-    nginxAgent:
-      enable: true
-      dataplaneKeySecretName: nginx-one-dataplane-key
-      endpointHost: agent.connect.nginx.com
+  nginxAgent:
+    enable: true
+    dataplaneKeySecretName: nginx-one-dataplane-key
+    endpointHost: agent.connect.nginx.com
 
   prometheus:
     create: true
