@@ -2,7 +2,7 @@
 nginx-ingress:
   controller:
     logLevel: "info"
-      env:
+    env:
       - name: NGINX_AGENT_COMMAND_SERVER_HOST
         value: "agent.connect.nginx.com"
       - name: NGINX_AGENT_COMMAND_SERVER_PORT
