@@ -54,6 +54,9 @@ nginx-ingress:
       v5: true
       securityContext:
         readOnlyRootFilesystem: false
+
+      defaultPolicy:
+        enable: true  
       enforcer:
         image:
           repository: private-registry.nginx.com/nap/waf-enforcer        
