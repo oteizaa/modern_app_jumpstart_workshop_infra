@@ -20,6 +20,7 @@ nginx-ingress:
                      /opt/app_protect/config \
                      /var/run/app_protect \
                      /var/log/app_protect
+            chown -R 101:101 /opt/app_protect /var/run/app_protect /var/log/app_protect         
             chmod -R 777 /opt/app_protect /var/run/app_protect /var/log/app_protect
         volumeMounts:
           - name: app-protect-bd-config
@@ -105,7 +106,12 @@ nginx-ingress:
           pullPolicy: Never
         securityContext:
           runAsUser: 101
-          runAsGroup: 101   
+          runAsGroup: 101
+        env:
+          - name: ENFORCER_HOST
+            value: "127.0.0.1"
+          - name: ENFORCER_PORT
+            value: "50000"  
         volumeMounts:
           - name: app-protect-bd-config
             mountPath: /opt/app_protect/bd_config
@@ -131,6 +137,10 @@ nginx-ingress:
       pullPolicy: Never
 
     nginxplus: true
+
+    extraArgs:
+      - -app-protect-config-mgr-address=127.0.0.1:8001
+      - -app-protect-enforcer-address=127.0.0.1:50000
 
     mgmtConfigMap:
       enable: true
