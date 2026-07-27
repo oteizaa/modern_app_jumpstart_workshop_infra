@@ -77,6 +77,9 @@ nginx-ingress:
 
     nginxplus: true
 
+    extraArgs:
+      - -app-protect-enforcer-address=unix:/var/run/app_protect/bd_enforcer.sock
+
     mgmtConfigMap:
       enable: true
       name: "nginx-ingress/nginx-plus-ingress-nginx-ingress"
