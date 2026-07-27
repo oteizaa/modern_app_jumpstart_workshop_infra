@@ -24,9 +24,6 @@ nginx-ingress:
           repository: private-registry.nginx.com/nap/waf-config-mgr
           tag: "5.6.0"
           pullPolicy: Never
-
-    extraArgs:
-      - -app-protect-enforcer-address=127.0.0.1:50000
     
     initContainers:
       - name: init-app-protect-dirs
