@@ -11,7 +11,8 @@ nginx-ingress:
         command: ['sh', '-c', 'mkdir -p /opt/app_protect/bd_config/tables /opt/app_protect/var /opt/app_protect/bundles && chmod -R 777 /opt/app_protect']
 
     readinessProbe:
-      custom: true   
+      enable: false
+      
     readyStatus:
       enable: false
 
