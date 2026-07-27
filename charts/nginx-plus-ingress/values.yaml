@@ -23,6 +23,18 @@ nginx-ingress:
           tag: "5.6.0"
           pullPolicy: Never
 
+    volumes:
+      - name: app-protect-bd-config
+        emptyDir: {}
+      - name: app-protect-var
+        emptyDir: {}
+    volumeMounts:
+      - name: app-protect-bd-config
+        mountPath: /opt/app_protect/bd_config
+      - name: app-protect-var
+        mountPath: /opt/app_protect/var
+          
+
     appprotectdos:
       enable: false
   
@@ -71,3 +83,4 @@ nginx-ingress:
     create: true
   serviceInsight:
     create: true
+
