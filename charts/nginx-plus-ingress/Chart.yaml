@@ -3,7 +3,7 @@ apiVersion: v2
 name: nginx-plus-ingress
 type: application
 version: 0.16.2
-appVersion: 5.5.4
+appVersion: "5.5.4"
 dependencies:
   - name: nginx-ingress
     version: "2.6.4"
