@@ -11,7 +11,7 @@ nginx-ingress:
         command: ['sh', '-c', 'mkdir -p /opt/app_protect/bd_config/tables /opt/app_protect/var /opt/app_protect/bundles && chmod -R 777 /opt/app_protect']
 
     readinessProbe:
-      custom: true
+      enable: false
     readyStatus:
       enable: false
 
@@ -33,22 +33,6 @@ nginx-ingress:
           tag: "5.6.0"
           pullPolicy: Never
           
-    volumes:
-      - name: app-protect-bd-config
-        emptyDir: {}
-      - name: app-protect-var
-        emptyDir: {}
-      - name: app-protect-bundles
-        emptyDir: {}
-
-    volumeMounts:
-      - name: app-protect-bd-config
-        mountPath: /opt/app_protect/bd_config
-      - name: app-protect-var
-        mountPath: /opt/app_protect/var
-      - name: app-protect-bundles
-        mountPath: /opt/app_protect/bundles
-
 
     appprotectdos:
       enable: false
