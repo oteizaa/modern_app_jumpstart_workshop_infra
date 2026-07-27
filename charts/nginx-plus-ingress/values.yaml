@@ -70,7 +70,7 @@ nginx-ingress:
       enable: false
 
     appprotect:
-      enable: true
+      enable: false
       v5: true
       securityContext:
         readOnlyRootFilesystem: false
