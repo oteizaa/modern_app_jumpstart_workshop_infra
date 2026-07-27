@@ -25,6 +25,18 @@ nginx-ingress:
           tag: "5.6.0"
           pullPolicy: Never
 
+    initContainers:
+      - name: init-app-protect-dirs
+        image: busybox:1.36
+        command: ['sh', '-c', 'mkdir -p /opt/app_protect/bd_config/tables /opt/app_protect/var /opt/app_protect/bundles && chmod -R 777 /opt/app_protect']
+        volumeMounts:
+          - name: app-protect-bd-config
+            mountPath: /opt/app_protect/bd_config
+          - name: app-protect-var
+            mountPath: /opt/app_protect/var
+          - name: app-protect-bundles
+            mountPath: /opt/app_protect/bundles
+
     volumes:
       - name: app-protect-bd-config
         emptyDir: {}
@@ -42,6 +54,7 @@ nginx-ingress:
 
     securityContext:
       readOnlyRootFilesystem: false
+      runAsUser: 0
           
 
     appprotectdos:
