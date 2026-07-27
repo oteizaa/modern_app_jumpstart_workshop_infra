@@ -105,12 +105,7 @@ nginx-ingress:
           pullPolicy: Never
         securityContext:
           runAsUser: 101
-          runAsGroup: 101  
-        env:
-          - name: ENFORCER_HOST
-            value: "127.0.0.1"
-          - name: ENFORCER_PORT
-            value: "50000"  
+          runAsGroup: 101   
         volumeMounts:
           - name: app-protect-bd-config
             mountPath: /opt/app_protect/bd_config
