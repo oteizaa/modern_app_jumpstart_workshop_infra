@@ -4,9 +4,10 @@ nginx-ingress:
     logLevel: "info"
     
     readyStatus:
-      enable: true
-      port: 8081
-      initialDelaySeconds: 30
+      enable: false
+    readinessProbe:
+      enable: false
+      
     
     appprotect:
       enable: true
