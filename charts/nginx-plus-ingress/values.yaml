@@ -75,6 +75,7 @@ nginx-ingress:
         readOnlyRootFilesystem: false
 
       enforcer:
+        enable: true
         image:
           repository: private-registry.nginx.com/nap/waf-enforcer        
           tag: "5.6.0"
@@ -97,6 +98,7 @@ nginx-ingress:
             mountPath: /var/log/app_protect
 
       configManager:
+        enable: true
         image:
           repository: private-registry.nginx.com/nap/waf-config-mgr
           tag: "5.6.0"
@@ -134,9 +136,6 @@ nginx-ingress:
       pullPolicy: Never
 
     nginxplus: true
-
-    extraArgs:
-      - -app-protect-enforcer-address=unix:/var/run/app_protect/bd_enforcer.sock
 
     mgmtConfigMap:
       enable: true
