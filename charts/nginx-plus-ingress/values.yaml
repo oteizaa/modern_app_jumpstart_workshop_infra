@@ -20,7 +20,7 @@ nginx-ingress:
           - name: app-protect-bundles
             mountPath: /opt/app_protect/bundles
           - name: app-protect-run          # <--- VOLUMEN REQUERIDO PARA SOCKETS
-            emptyDir: {}
+            mountPath: /var/run/app_protect
 
     volumes:
       - name: app-protect-bd-config
@@ -30,7 +30,7 @@ nginx-ingress:
       - name: app-protect-bundles
         emptyDir: {}
       - name: app-protect-run          # <--- MONTAJE DE SOCKET EN CONTENEDOR PRINCIPAL
-        mountPath: /var/run/app_protect        
+        emptyDir: {}  
 
     volumeMounts:
       - name: app-protect-bd-config
@@ -40,7 +40,7 @@ nginx-ingress:
       - name: app-protect-bundles
         mountPath: /opt/app_protect/bundles
       - name: app-protect-run          # <--- VOLUMEN REQUERIDO PARA SOCKETS
-        emptyDir: {}  
+        mountPath: /var/run/app_protect  
 
     # 2. Desactivar el Readiness probe de Kubernetes
     readinessProbe:
