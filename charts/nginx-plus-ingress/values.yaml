@@ -3,15 +3,24 @@ nginx-ingress:
   controller:
     logLevel: "info"
 
-    # 1. Preparamos las carpetas con el initContainer y el volumen compartido
     initContainers:
       - name: setup-nap-dirs
         image: private-registry.nginx.com/nginx-ic-nap/nginx-plus-ingress:5.5.4-agent
         imagePullPolicy: Never
         securityContext:
-          runAsUser: 0       # <--- CAMBIO CLAVE: Permite crear directorios en /opt/
+          runAsUser: 0
           runAsGroup: 0
-        command: ['sh', '-c', 'mkdir -p /opt/app_protect/bd_config/tables /opt/app_protect/var /opt/app_protect/bundles && chmod -R 777 /opt/app_protect']
+        command:
+          - sh
+          - -c
+          - |
+            mkdir -p /opt/app_protect/bd_config/tables \
+                     /opt/app_protect/var \
+                     /opt/app_protect/bundles \
+                     /opt/app_protect/config \
+                     /var/run/app_protect \
+                     /var/log/app_protect
+            chmod -R 777 /opt/app_protect /var/run/app_protect /var/log/app_protect
         volumeMounts:
           - name: app-protect-bd-config
             mountPath: /opt/app_protect/bd_config
@@ -19,8 +28,12 @@ nginx-ingress:
             mountPath: /opt/app_protect/var
           - name: app-protect-bundles
             mountPath: /opt/app_protect/bundles
-          - name: app-protect-run          # <--- VOLUMEN REQUERIDO PARA SOCKETS
+          - name: app-protect-config
+            mountPath: /opt/app_protect/config
+          - name: app-protect-run
             mountPath: /var/run/app_protect
+          - name: app-protect-log
+            mountPath: /var/log/app_protect
 
     volumes:
       - name: app-protect-bd-config
@@ -29,8 +42,12 @@ nginx-ingress:
         emptyDir: {}
       - name: app-protect-bundles
         emptyDir: {}
-      - name: app-protect-run          # <--- MONTAJE DE SOCKET EN CONTENEDOR PRINCIPAL
-        emptyDir: {}  
+      - name: app-protect-config
+        emptyDir: {}
+      - name: app-protect-run
+        emptyDir: {}
+      - name: app-protect-log
+        emptyDir: {}
 
     volumeMounts:
       - name: app-protect-bd-config
@@ -39,25 +56,25 @@ nginx-ingress:
         mountPath: /opt/app_protect/var
       - name: app-protect-bundles
         mountPath: /opt/app_protect/bundles
-      - name: app-protect-run          # <--- VOLUMEN REQUERIDO PARA SOCKETS
-        mountPath: /var/run/app_protect  
+      - name: app-protect-config
+        mountPath: /opt/app_protect/config
+      - name: app-protect-run
+        mountPath: /var/run/app_protect
+      - name: app-protect-log
+        mountPath: /var/log/app_protect
 
-    # 2. Desactivar el Readiness probe de Kubernetes
     readinessProbe:
       custom: true
     readyStatus:
       enable: false
 
-    # 3. NOMBRES CORREGIDOS DE APP PROTECT V5 (wafEnforcer y wafConfigMgr)
     appprotect:
       enable: true
       v5: true
       securityContext:
         readOnlyRootFilesystem: false
 
-      defaultPolicy:
-        enable: true  
-      enforcer:
+      wafEnforcer:
         image:
           repository: private-registry.nginx.com/nap/waf-enforcer        
           tag: "5.6.0"
@@ -69,9 +86,14 @@ nginx-ingress:
             mountPath: /opt/app_protect/var
           - name: app-protect-bundles
             mountPath: /opt/app_protect/bundles
+          - name: app-protect-config
+            mountPath: /opt/app_protect/config
           - name: app-protect-run
-            mountPath: /var/run/app_protect  
-      configManager:
+            mountPath: /var/run/app_protect
+          - name: app-protect-log
+            mountPath: /var/log/app_protect
+
+      wafConfigMgr:
         image:
           repository: private-registry.nginx.com/nap/waf-config-mgr
           tag: "5.6.0"
@@ -83,8 +105,12 @@ nginx-ingress:
             mountPath: /opt/app_protect/var
           - name: app-protect-bundles
             mountPath: /opt/app_protect/bundles
+          - name: app-protect-config
+            mountPath: /opt/app_protect/config
           - name: app-protect-run
-            mountPath: /var/run/app_protect  
+            mountPath: /var/run/app_protect
+          - name: app-protect-log
+            mountPath: /var/log/app_protect
 
     appprotectdos:
       enable: false
@@ -97,10 +123,6 @@ nginx-ingress:
       pullPolicy: Never
 
     nginxplus: true
-
-    extraArgs:
-      - >-
-        -app-protect-enforcer-address=127.0.0.1:50000
 
     mgmtConfigMap:
       enable: true
