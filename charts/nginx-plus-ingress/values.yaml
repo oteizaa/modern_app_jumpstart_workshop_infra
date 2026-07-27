@@ -139,7 +139,7 @@ nginx-ingress:
     nginxplus: true
 
     extraArgs:
-      - -app-protect-config-mgr-address=127.0.0.1:8001
+      - -app-protect-v5=true
       - -app-protect-enforcer-address=127.0.0.1:50000
 
     mgmtConfigMap:
