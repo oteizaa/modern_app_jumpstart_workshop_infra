@@ -2,6 +2,16 @@
 nginx-ingress:
   controller:
     logLevel: "info"
+      env:
+      - name: NGINX_AGENT_COMMAND_SERVER_HOST
+        value: "agent.connect.nginx.com"
+      - name: NGINX_AGENT_COMMAND_SERVER_PORT
+        value: "443"
+      - name: NGINX_AGENT_COMMAND_AUTH_TOKEN
+        valueFrom:
+          secretKeyRef:
+            name: nginx-one-dataplane-key
+            key: dataplane.key
 
     initContainers:
       - name: setup-nap-dirs
