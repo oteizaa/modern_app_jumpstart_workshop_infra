@@ -1,29 +1,44 @@
 ---
 nginx-ingress:
   controller:
-    # Cambiamos logLevel a string para forzar el uso de -log-level en lugar de -v
     logLevel: "info"
     
     appprotect:
       enable: true
+      v5: true
+      enforcer:
+        image:
+          pullPolicy: Never  # también son imágenes separadas -> mismo tratamiento air-gapped
+      configManager:
+        image:
+          pullPolicy: Never
+      
     appprotectdos:
       enable: true
+      
     enableSnippets: true
+    
     image:
       repository: private-registry.nginx.com/nginx-ic-nap/nginx-plus-ingress
       tag: 5.5.4-agent
       pullPolicy: Never # <--- Forzamos a k3s a usar la imagen local
+    
     nginxplus: true
+    
     mgmtConfigMap:
       enable: true
       name: "nginx-ingress/nginx-plus-ingress-nginx-ingress"
+    
     nginxStatus:
       allowCidrs: 0.0.0.0/0
       port: 9000
+    
     readyStatus:
       initialDelaySeconds: 30
+    
     serviceAccount:
       imagePullSecretName: ghcr
+    
     service:
       customPorts:
         - port: 9114
@@ -36,6 +51,11 @@ nginx-ingress:
           nodePort: 32000
           protocol: TCP
           name: nginx-status
+  
+  nginxAgent:
+    enable: true
+    dataplaneKeySecretName: nginx-one-dataplane-key   # Secret requerido si enable=true
+  
   prometheus:
     create: true
   serviceInsight:
