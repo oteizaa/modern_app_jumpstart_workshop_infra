@@ -74,7 +74,10 @@ nginx-ingress:
       v5: true
       securityContext:
         readOnlyRootFilesystem: false
-
+      
+      defaultPolicy:
+        enable: true
+        
       enforcer:
         enable: true
         image:
