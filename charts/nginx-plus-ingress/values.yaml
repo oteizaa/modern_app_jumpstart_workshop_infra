@@ -8,9 +8,11 @@ nginx-ingress:
       v5: true
       enforcer:
         image:
+          tag: "5.6.0"
           pullPolicy: Never  # también son imágenes separadas -> mismo tratamiento air-gapped
       configManager:
         image:
+          tag: "5.6.0"
           pullPolicy: Never
 
     appprotectdos:
