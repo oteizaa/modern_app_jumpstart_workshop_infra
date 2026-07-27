@@ -8,6 +8,9 @@ nginx-ingress:
       - name: setup-nap-dirs
         image: private-registry.nginx.com/nginx-ic-nap/nginx-plus-ingress:5.5.4-agent
         imagePullPolicy: Never
+        securityContext:
+          runAsUser: 0       # <--- CAMBIO CLAVE: Permite crear directorios en /opt/
+          runAsGroup: 0
         command: ['sh', '-c', 'mkdir -p /opt/app_protect/bd_config/tables /opt/app_protect/var /opt/app_protect/bundles && chmod -R 777 /opt/app_protect']
         volumeMounts:
           - name: app-protect-bd-config
